@@ -1,0 +1,257 @@
+{
+  "project": "markdown-to-word",
+  "description": "本地 Web 应用，支持 Markdown 与 Word/HTML/PDF 之间的相互转换",
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "category": "infra",
+      "priority": "P0",
+      "description": "初始化项目结构和基础配置",
+      "context": "创建 Vite + TypeScript 项目，配置开发环境和构建工具",
+      "steps": [
+        "使用 Vite 创建 TypeScript 项目",
+        "配置 tsconfig.json 和 vite.config.ts",
+        "创建规范的目录结构（src/styles, src/scripts, src/pages, src/components, src/i18n, src/utils）",
+        "创建 package.json 并安装必要依赖",
+        "创建 .gitignore 文件"
+      ],
+      "acceptance_criteria": [
+        "项目可以通过 npm run dev 启动",
+        "目录结构符合规范要求",
+        "TypeScript 配置正确无报错"
+      ],
+      "dependencies": [],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-002",
+      "category": "feature",
+      "priority": "P0",
+      "description": "创建样式系统（主题、磨砂玻璃效果）",
+      "context": "实现黑白灰风格、明暗主题切换、磨砂玻璃质感和弹窗背景模糊",
+      "steps": [
+        "创建 CSS 变量系统（颜色、间距、字体）",
+        "实现明暗主题 CSS 变量",
+        "创建磨砂玻璃效果样式类",
+        "创建弹窗背景模糊样式",
+        "创建主题切换工具函数",
+        "实现跟随系统主题功能"
+      ],
+      "acceptance_criteria": [
+        "CSS 变量覆盖所有颜色和间距",
+        "明暗主题可以正确切换",
+        "磨砂玻璃效果正确显示",
+        "弹窗背景模糊效果正确",
+        "可以跟随系统主题自动切换"
+      ],
+      "dependencies": ["TASK-001"],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-003",
+      "category": "feature",
+      "priority": "P0",
+      "description": "实现 i18n 国际化系统",
+      "context": "创建多语言支持系统，支持中文和英文",
+      "steps": [
+        "创建 i18n 工具函数",
+        "创建中文语言包",
+        "创建英文语言包",
+        "创建语言切换组件",
+        "实现语言持久化存储"
+      ],
+      "acceptance_criteria": [
+        "支持中英文切换",
+        "语言选择可以持久化",
+        "所有文本内容支持国际化"
+      ],
+      "dependencies": ["TASK-001"],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-004",
+      "category": "feature",
+      "priority": "P0",
+      "description": "创建导航栏组件",
+      "context": "创建响应式导航栏，包含所有功能入口和主题/语言切换",
+      "steps": [
+        "创建导航栏 HTML 结构",
+        "创建导航栏样式（磨砂玻璃效果）",
+        "创建导航栏交互脚本",
+        "集成主题切换功能",
+        "集成语言切换功能",
+        "实现移动端响应式菜单"
+      ],
+      "acceptance_criteria": [
+        "导航栏显示所有功能入口",
+        "主题切换按钮正常工作",
+        "语言切换按钮正常工作",
+        "移动端菜单正常显示",
+        "磨砂玻璃效果正确"
+      ],
+      "dependencies": ["TASK-002", "TASK-003"],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-005",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建 Markdown 转 DOCX 页面",
+      "context": "实现 Markdown 文件上传、编辑、预览和转换为 DOCX 功能",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "创建文件上传组件",
+        "创建 Markdown 编辑器组件",
+        "创建预览组件",
+        "实现 Markdown 转 DOCX 转换逻辑",
+        "实现文件下载功能"
+      ],
+      "acceptance_criteria": [
+        "支持拖拽上传 Markdown 文件",
+        "支持在线编辑 Markdown",
+        "支持实时预览",
+        "可以正确转换为 DOCX 并下载"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "large",
+      "passes": false
+    },
+    {
+      "id": "TASK-006",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建 Word 转 Markdown 页面",
+      "context": "实现 Word 文件上传和转换为 Markdown 功能",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "创建文件上传组件",
+        "实现 Word 转 Markdown 转换逻辑",
+        "创建 Markdown 输出组件",
+        "实现复制和下载功能"
+      ],
+      "acceptance_criteria": [
+        "支持上传 DOCX 文件",
+        "可以正确转换为 Markdown",
+        "支持复制和下载结果"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "large",
+      "passes": false
+    },
+    {
+      "id": "TASK-007",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建 Markdown 转 PDF 页面",
+      "context": "实现 Markdown 转 PDF 功能",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "复用 Markdown 编辑器组件",
+        "实现 Markdown 转 PDF 转换逻辑",
+        "实现 PDF 下载功能"
+      ],
+      "acceptance_criteria": [
+        "支持编辑和预览 Markdown",
+        "可以正确转换为 PDF 并下载"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "large",
+      "passes": false
+    },
+    {
+      "id": "TASK-008",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建 Markdown 转 HTML 页面",
+      "context": "实现 Markdown 转 HTML 功能",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "复用 Markdown 编辑器组件",
+        "实现 Markdown 转 HTML 转换逻辑",
+        "创建 HTML 输出组件",
+        "实现复制和下载功能"
+      ],
+      "acceptance_criteria": [
+        "支持编辑和预览 Markdown",
+        "可以正确转换为 HTML",
+        "支持复制和下载结果"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-009",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建 HTML 转 Markdown 页面",
+      "context": "实现 HTML 转 Markdown 功能",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "创建 HTML 输入组件",
+        "实现 HTML 转 Markdown 转换逻辑",
+        "创建 Markdown 输出组件",
+        "实现复制和下载功能"
+      ],
+      "acceptance_criteria": [
+        "支持输入 HTML 内容",
+        "可以正确转换为 Markdown",
+        "支持复制和下载结果"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "medium",
+      "passes": false
+    },
+    {
+      "id": "TASK-010",
+      "category": "feature",
+      "priority": "P1",
+      "description": "创建更新日志页面",
+      "context": "展示项目版本更新历史",
+      "steps": [
+        "创建页面 HTML 结构",
+        "创建页面样式",
+        "创建版本卡片组件",
+        "填充版本更新内容"
+      ],
+      "acceptance_criteria": [
+        "页面正确显示所有版本更新",
+        "样式符合整体设计风格"
+      ],
+      "dependencies": ["TASK-004"],
+      "estimated_complexity": "small",
+      "passes": false
+    },
+    {
+      "id": "TASK-011",
+      "category": "test",
+      "priority": "P2",
+      "description": "端到端测试和优化",
+      "context": "测试所有功能并优化性能",
+      "steps": [
+        "测试所有转换功能",
+        "测试主题切换",
+        "测试语言切换",
+        "测试响应式布局",
+        "优化性能"
+      ],
+      "acceptance_criteria": [
+        "所有功能正常工作",
+        "无明显性能问题",
+        "响应式布局正确"
+      ],
+      "dependencies": ["TASK-005", "TASK-006", "TASK-007", "TASK-008", "TASK-009", "TASK-010"],
+      "estimated_complexity": "medium",
+      "passes": false
+    }
+  ]
+}

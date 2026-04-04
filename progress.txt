@@ -1,0 +1,191 @@
+# Markdown to Word 项目开发日志
+
+## 初始化记录
+- 时间: 2026-04-04
+- 项目名称: markdown-to-word
+- 项目目标: 创建本地 Web 应用，支持 Markdown 与 Word/HTML/PDF 之间的相互转换
+- 技术栈: Vite + TypeScript + 纯 CSS
+
+## 需求概述
+1. 功能页面:
+   - Markdown 转 DOCX
+   - Word 转 Markdown
+   - Markdown 转 PDF
+   - Markdown 转 HTML
+   - HTML 转 Markdown
+   - 更新日志页面
+
+2. 技术要求:
+   - 文件夹分类规范，CSS、HTML 分离
+   - i18n 国际化支持（中英文）
+   - 明暗风格支持，跟随系统
+   - 导航栏
+   - 黑白灰风格
+   - 磨砂玻璃质感
+   - 弹窗背景模糊
+
+---
+
+## TASK-001: 初始化项目结构和基础配置
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建 package.json、tsconfig.json、vite.config.ts
+  2. 创建规范的目录结构:
+     - src/styles/ (CSS 样式文件)
+     - src/scripts/ (TypeScript 脚本)
+     - src/scripts/utils/ (工具函数)
+     - src/scripts/pages/ (页面逻辑)
+     - src/i18n/ (国际化)
+     - public/ (静态资源)
+  3. 安装依赖: marked, mammoth, docx, turndown, jspdf, html2canvas
+  4. 安装开发依赖: typescript, vite, @types/turndown
+
+## TASK-002: 创建样式系统（主题、磨砂玻璃效果）
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建 CSS 变量系统 (variables.css)
+  2. 实现明暗主题 CSS 变量
+  3. 创建磨砂玻璃效果样式类 (glass.css)
+  4. 创建弹窗背景模糊样式
+  5. 创建主题切换工具函数 (theme.ts)
+  6. 实现跟随系统主题功能
+
+## TASK-003: 实现 i18n 国际化系统
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建 i18n 工具函数 (i18n.ts)
+  2. 创建中文语言包
+  3. 创建英文语言包
+  4. 实现语言持久化存储
+  5. 集成到导航栏
+
+## TASK-004: 创建导航栏组件
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建导航栏 HTML 结构
+  2. 创建导航栏样式（磨砂玻璃效果）
+  3. 创建导航栏交互脚本
+  4. 集成主题切换功能
+  5. 集成语言切换功能
+  6. 实现移动端响应式菜单
+
+## TASK-005: 创建 Markdown 转 DOCX 页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 创建文件上传组件
+  4. 创建 Markdown 编辑器组件
+  5. 创建预览组件
+  6. 实现 Markdown 转 DOCX 转换逻辑 (使用 docx 库)
+  7. 实现文件下载功能
+
+## TASK-006: 创建 Word 转 Markdown 页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 创建文件上传组件（支持拖拽）
+  4. 实现 Word 转 Markdown 转换逻辑 (使用 mammoth 和 turndown)
+  5. 创建 Markdown 输出组件
+  6. 实现复制和下载功能
+
+## TASK-007: 创建 Markdown 转 PDF 页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 复用 Markdown 编辑器组件
+  4. 实现 Markdown 转 PDF 转换逻辑 (使用 jspdf 和 html2canvas)
+  5. 实现 PDF 下载功能
+
+## TASK-008: 创建 Markdown 转 HTML 页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 复用 Markdown 编辑器组件
+  4. 实现 Markdown 转 HTML 转换逻辑 (使用 marked)
+  5. 创建 HTML 输出组件
+  6. 实现复制和下载功能
+
+## TASK-009: 创建 HTML 转 Markdown 页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 创建 HTML 输入组件
+  4. 实现 HTML 转 Markdown 转换逻辑 (使用 turndown)
+  5. 创建 Markdown 输出组件
+  6. 实现复制和下载功能
+
+## TASK-010: 创建更新日志页面
+- 时间: 2026-04-04
+- 状态: 已完成
+- 操作:
+  1. 创建页面 HTML 结构
+  2. 创建页面样式
+  3. 创建版本卡片组件
+  4. 填充版本更新内容
+
+## 测试验证
+- 时间: 2026-04-04
+- 测试结果:
+  1. TypeScript 编译通过
+  2. 开发服务器启动成功 (http://localhost:3000)
+  3. 首页显示正常
+  4. 主题切换功能正常（明暗模式）
+  5. 语言切换功能正常（中英文）
+  6. 所有页面路由正常工作
+  7. 磨砂玻璃效果正确显示
+
+## 项目结构
+```
+markdown-to-word/
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── .gitignore
+├── task.json
+├── progress.txt
+├── public/
+│   └── favicon.svg
+└── src/
+    ├── main.ts
+    ├── styles/
+    │   ├── main.css
+    │   ├── variables.css
+    │   ├── base.css
+    │   ├── glass.css
+    │   ├── components/
+    │   │   ├── navbar.css
+    │   │   ├── buttons.css
+    │   │   ├── editor.css
+    │   │   └── uploader.css
+    │   └── pages/
+    │       ├── home.css
+    │       └── converter.css
+    └── scripts/
+        ├── router.ts
+        ├── utils/
+        │   ├── theme.ts
+        │   └── i18n.ts
+        └── pages/
+            ├── md-to-docx.ts
+            ├── word-to-md.ts
+            ├── md-to-pdf.ts
+            ├── md-to-html.ts
+            └── html-to-md.ts
+```
+
+---
