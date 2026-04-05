@@ -45,7 +45,9 @@ jobs:
           workspaces: './src-tauri -> target'
 
       - name: Install frontend dependencies
-        run: npm install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
@@ -75,21 +77,21 @@ jobs:
           name: Markdown Tools ${{ github.ref_name }}
           body: |
             ## 🎉 Markdown Tools ${{ github.ref_name }}
-            
+
             ### 📥 下载安装包
-            
+
             #### Windows
             - 下载 `.exe` 安装包进行安装
             - 或下载 `.msi` 安装包
-            
+
             #### macOS
             - 下载 `.dmg` 安装包
             - 支持 Intel 和 Apple Silicon 芯片
-            
+
             #### Linux
             - 下载 `.AppImage` 文件直接运行
             - 或下载 `.deb` / `.rpm` 包安装
-            
+
             ### 🌍 支持的语言
             - 🇨🇳 中文
             - 🇺🇸 English
@@ -98,7 +100,7 @@ jobs:
             - 🇪🇸 Español
             - 🇩🇪 Deutsch
             - 🇷🇺 Русский
-            
+
             ### 📋 更新内容
             请查看下方的 commits 历史了解详细更新内容。
           draft: true
