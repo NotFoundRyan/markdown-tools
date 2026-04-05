@@ -46,8 +46,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
-          rm -rf node_modules package-lock.json
-          npm install
+          npm ci --legacy-peer-deps
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
