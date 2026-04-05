@@ -3,6 +3,8 @@ import TurndownService from 'turndown';
 import { marked } from 'marked';
 import { showNotification, showError, showSuccess } from '../utils/notification';
 import { t } from '../utils/i18n';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 let currentMarkdown = '';
 let currentFileName = 'document';
@@ -84,7 +86,7 @@ export function initWordToMdLogic() {
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > MAX_FILE_SIZE) {
       showError('error.fileTooLarge');
       return;
     }
@@ -171,21 +173,18 @@ export function initWordToMdLogic() {
     showNotification(t('btn.copied'), 'success');
   });
 
-  downloadBtn?.addEventListener('click', () => {
+  downloadBtn?.addEventListener('click', async () => {
     if (!currentMarkdown.trim()) {
       showError('error.emptyContent');
       return;
     }
     const blob = new Blob([currentMarkdown], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${currentFileName}.md`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showSuccess('success.downloaded');
+    const saved = await saveFile(blob, `${currentFileName}.md`, [
+      { name: 'Markdown', extensions: ['md'] },
+    ]);
+    if (saved) {
+      showSuccess('success.downloaded');
+    }
   });
 
   clearBtn?.addEventListener('click', () => {

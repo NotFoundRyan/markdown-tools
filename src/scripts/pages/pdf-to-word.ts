@@ -1,6 +1,8 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, BorderStyle } from 'docx';
 import { showError, showSuccess } from '../utils/notification';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
@@ -214,7 +216,7 @@ export function initPdfToWordLogic() {
       return;
     }
 
-    if (file.size > 20 * 1024 * 1024) {
+    if (file.size > MAX_FILE_SIZE) {
       showError('error.fileTooLarge');
       return;
     }
@@ -468,16 +470,12 @@ export function initPdfToWordLogic() {
       });
 
       const blob = await Packer.toBlob(doc);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${currentFileName}.docx`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      showSuccess('success.downloaded');
+      const saved = await saveFile(blob, `${currentFileName}.docx`, [
+        { name: 'Word Document', extensions: ['docx'] },
+      ]);
+      if (saved) {
+        showSuccess('success.downloaded');
+      }
     } catch (error) {
       console.error('Word 生成失败:', error);
       showError('error.convertFailed');

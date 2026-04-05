@@ -2,6 +2,8 @@ import { marked, Token } from 'marked';
 import markedKatex from 'marked-katex-extension';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, BorderStyle, Table, TableRow, TableCell, WidthType } from 'docx';
 import { showError, showSuccess } from '../utils/notification';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 if (!document.querySelector('link[href*="katex"]')) {
   const link = document.createElement('link');
@@ -88,7 +90,7 @@ export function initMdToDocxLogic() {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
 
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > MAX_FILE_SIZE) {
         showError('error.fileTooLarge');
         return;
       }
@@ -130,7 +132,7 @@ export function initMdToDocxLogic() {
     if (files && files.length > 0) {
       const file = files[0];
 
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > MAX_FILE_SIZE) {
         showError('error.fileTooLarge');
         return;
       }
@@ -175,13 +177,12 @@ export function initMdToDocxLogic() {
     try {
       const doc = await convertMarkdownToDocx(currentMarkdown);
       const blob = await Packer.toBlob(doc);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${currentFileName}.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showSuccess('success.downloaded');
+      const saved = await saveFile(blob, `${currentFileName}.docx`, [
+        { name: 'Word Document', extensions: ['docx'] },
+      ]);
+      if (saved) {
+        showSuccess('success.downloaded');
+      }
     } catch (error) {
       console.error('转换失败:', error);
       showError('error.convertFailed');

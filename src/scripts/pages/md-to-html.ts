@@ -2,6 +2,8 @@ import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 import katex from 'katex';
 import { showNotification, showError, showSuccess } from '../utils/notification';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 if (!document.querySelector('link[href*="katex"]')) {
   const link = document.createElement('link');
@@ -173,7 +175,7 @@ export function initMdToHtmlLogic() {
   });
 
   async function handleFile(file: File) {
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > MAX_FILE_SIZE) {
       showError('error.fileTooLarge');
       return;
     }
@@ -210,7 +212,7 @@ export function initMdToHtmlLogic() {
         e.preventDefault();
         const file = item.getAsFile();
         if (file) {
-          if (file.size > 10 * 1024 * 1024) {
+          if (file.size > MAX_FILE_SIZE) {
             showError('error.fileTooLarge');
             return;
           }
@@ -254,7 +256,7 @@ export function initMdToHtmlLogic() {
     showNotification('已复制到剪贴板', 'success');
   });
 
-  downloadBtn?.addEventListener('click', () => {
+  downloadBtn?.addEventListener('click', async () => {
     if (!currentHtml.trim()) {
       showError('error.emptyContent');
       return;
@@ -284,14 +286,11 @@ ${currentHtml}
 </html>`;
 
     const blob = new Blob([fullHtml], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${currentFileName}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showSuccess('success.downloaded');
+    const saved = await saveFile(blob, `${currentFileName}.html`, [
+      { name: 'HTML Document', extensions: ['html'] },
+    ]);
+    if (saved) {
+      showSuccess('success.downloaded');
+    }
   });
 }

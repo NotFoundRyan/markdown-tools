@@ -1,4 +1,5 @@
 import './styles/main.css';
+import 'katex/dist/katex.min.css';
 import { initRouter } from './scripts/router';
 import { initTheme, toggleTheme, getCurrentAppliedTheme } from './scripts/utils/theme';
 import { initI18n, setLang, getCurrentLang, t, getAllLanguages } from './scripts/utils/i18n';

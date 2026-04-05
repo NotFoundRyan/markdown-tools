@@ -2,6 +2,8 @@ import mammoth from 'mammoth';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { showError, showSuccess } from '../utils/notification';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 let currentFileName = 'document';
 
@@ -77,7 +79,7 @@ export function initWordToPdfLogic() {
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > MAX_FILE_SIZE) {
       showError('error.fileTooLarge');
       return;
     }
@@ -197,8 +199,13 @@ export function initWordToPdfLogic() {
         }
       }
 
-      pdf.save(`${currentFileName}.pdf`);
-      showSuccess('success.downloaded');
+      const pdfBlob = pdf.output('blob');
+      const saved = await saveFile(pdfBlob, `${currentFileName}.pdf`, [
+        { name: 'PDF Document', extensions: ['pdf'] },
+      ]);
+      if (saved) {
+        showSuccess('success.downloaded');
+      }
     } catch (error) {
       console.error('PDF 生成失败:', error);
       showError('error.convertFailed');

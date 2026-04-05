@@ -3,6 +3,8 @@ import markedKatex from 'marked-katex-extension';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { showError, showSuccess } from '../utils/notification';
+import { saveFile } from '../utils/fileSaver';
+import { MAX_FILE_SIZE } from '../utils/fileSize';
 
 if (!document.querySelector('link[href*="katex"]')) {
   const link = document.createElement('link');
@@ -105,7 +107,7 @@ export function initMdToPdfLogic() {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
 
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > MAX_FILE_SIZE) {
         showError('error.fileTooLarge');
         return;
       }
@@ -147,7 +149,7 @@ export function initMdToPdfLogic() {
     if (files && files.length > 0) {
       const file = files[0];
 
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > MAX_FILE_SIZE) {
         showError('error.fileTooLarge');
         return;
       }
@@ -265,8 +267,13 @@ async function generatePdf(pageSize: string, orientation: 'portrait' | 'landscap
       }
     }
 
-    pdf.save(`${currentFileName}.pdf`);
-    showSuccess('success.downloaded');
+    const pdfBlob = pdf.output('blob');
+    const saved = await saveFile(pdfBlob, `${currentFileName}.pdf`, [
+      { name: 'PDF Document', extensions: ['pdf'] },
+    ]);
+    if (saved) {
+      showSuccess('success.downloaded');
+    }
   } catch (error) {
     console.error('PDF 生成失败:', error);
     showError('error.convertFailed');
